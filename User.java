@@ -1,13 +1,13 @@
+import java.util.*;
+
 class User {
   private String userId;
   private String username;
   private String password;
   private String email;
   private String dateOfBirth;
-  private String profilePicture;
   private List<User> friendList;
   private List<Post> postList;
-  private List<Notification> notificationList;
 
   // Constructor to initialize the User object with the given properties
   public User(String userId, String username, String password, String email, String dateOfBirth, String profilePicture) {
@@ -16,10 +16,8 @@ class User {
     this.password = password;
     this.email = email;
     this.dateOfBirth = dateOfBirth;
-    this.profilePicture = profilePicture;
     this.friendList = new ArrayList<>();
     this.postList = new ArrayList<>();
-    this.notificationList = new ArrayList<>();
   }
 
   // Getters and setters for all properties
@@ -63,14 +61,6 @@ class User {
     this.dateOfBirth = dateOfBirth;
   }
 
-  public String getProfilePicture() {
-    return profilePicture;
-  }
-
-  public void setProfilePicture(String profilePicture) {
-    this.profilePicture = profilePicture;
-  }
-
   public List<User> getFriendList() {
     return friendList;
   }
@@ -85,14 +75,6 @@ class User {
 
   public void setPostList(List<Post> postList) {
     this.postList = postList;
-  }
-
-  public List<Notification> getNotificationList() {
-    return notificationList;
-  }
-
-  public void setNotificationList(List<Notification> notificationList) {
-    this.notificationList = notificationList;
   }
 
   // Method to add a friend to the friend list
@@ -113,15 +95,5 @@ class User {
   // Method to delete a post from the post list
   public void deletePost(Post post) {
     postList.remove(post);
-  }
-
-  // Method to send a notification to another user
-  public void sendNotification(Notification notification) {
-    notificationList.add(notification);
-  }
-
-  // Method to receive a notification from another user
-  public void receiveNotification(Notification notification) {
-    notificationList.add(notification);
   }
 }

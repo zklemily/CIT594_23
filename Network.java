@@ -1,4 +1,3 @@
-
 /**
  * @author OpenDSA
  *
@@ -8,7 +7,6 @@ public class Network implements Graph {
     private Edge[]   nodeArray;
     private Object[] nodeValues;
     private int      numEdge;
-
 
     // Initialize the graph with n vertices
     public void init(int n)
