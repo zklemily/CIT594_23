@@ -6,7 +6,8 @@ class User {
   private String password;
   private String email;
   private String dateOfBirth;
-  private List<User> friendList;
+  private Set<User> followerSet;
+  private Set<User> followingSet;
   private List<Post> postList;
 
   // Constructor to initialize the User object with the given properties
@@ -16,7 +17,8 @@ class User {
     this.password = password;
     this.email = email;
     this.dateOfBirth = dateOfBirth;
-    this.friendList = new ArrayList<>();
+    this.followerSet = new HashSet<>();
+    this.followingSet = new HashSet<>();
     this.postList = new ArrayList<>();
   }
 
@@ -76,8 +78,13 @@ class User {
   }
 
   // Method to add a friend to the friend list
-  public void addFriend(User user) {
-    friendList.add(user);
+  public void follow(User user) {
+    this.followingSet.add(user);
+    user.addFollower(this);
+  }
+
+  public void addFollower(User user) {
+    this.followerSet.add(user);
   }
 
   // Method to remove a friend from the friend list
