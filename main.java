@@ -15,7 +15,7 @@ public class main {
     private int numVertices;    //all vertices in the doc
     private int actualVertices; //actual vertices without junk edges
     private double tau;
-    Network graph = new Network();
+    private Network graph = new Network();
 
     public int loadGraphFromDataSet(String filePath, double tau) {
         this.tau = tau;
@@ -205,5 +205,22 @@ public class main {
         System.out.println("5. Option 5");
         System.out.println("Q. Quit");
         System.out.print("Enter your choice: ");
+    }
+
+    private int getUserByUsername(String username) {
+
+        return 0;
+    }
+
+    private boolean login(String username, String password) {
+        return false;
+    }
+
+    private void follow(int user) {
+
+    }
+
+    private void unfollow(int user) {
+
     }
 }
