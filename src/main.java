@@ -210,6 +210,7 @@ public class main {
         // Clean up and exit the application
         scanner.close();
         System.out.println("Exiting the social network application.");
+        //abc
     }
 
     private static void displayMenu() {
