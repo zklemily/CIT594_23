@@ -206,4 +206,20 @@ public class main {
         System.out.println("Q. Quit");
         System.out.print("Enter your choice: ");
     }
+
+    private int getUserByUsername(String username) {
+        return 0;
+    }
+
+    private boolean login(String username, String password) {
+        return false;
+    }
+
+    private void follow(int user) {
+
+    }
+
+    private void unfollow(int user) {
+
+    }
 }
