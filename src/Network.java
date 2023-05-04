@@ -54,7 +54,7 @@ public class Network implements Graph {
     }
 
 
-    // Return the link in v's neighbor list that preceeds the
+    // Return the link in v's neighbor list that precedes the
     // one with w (or where it would be)
     private Edge find(int v, int w)
     {
@@ -117,7 +117,7 @@ public class Network implements Graph {
     }
 
 
-    // Returns an array containing the indicies of the neighbors of v
+    // Returns an array containing the indices of the neighbors of v
     public int[] neighbors(int v)
     {
         int cnt = 0;
