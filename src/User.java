@@ -8,6 +8,7 @@ class User {
   private String dateOfBirth;
   private Set<User> followerSet;
   private Set<User> followingSet;
+  private Set<String> interestSet;
   private List<Post> postList;
 
   // Constructor to initialize the User object with the given properties
@@ -19,6 +20,7 @@ class User {
     this.dateOfBirth = dateOfBirth;
     this.followerSet = new HashSet<>();
     this.followingSet = new HashSet<>();
+    this.interestSet = new HashSet<>();
     this.postList = new ArrayList<>();
   }
 
@@ -61,14 +63,6 @@ class User {
     this.dateOfBirth = dateOfBirth;
   }
 
-  public List<User> getFriendList() {
-    return friendList;
-  }
-
-  public void setFriendList(List<User> friendList) {
-    this.friendList = friendList;
-  }
-
   public List<Post> getPostList() {
     return postList;
   }
@@ -90,6 +84,14 @@ class User {
   // Method to remove a friend from the friend list
   public void removeFollower(User user) {
     this.followerSet.remove(user);
+  }
+
+  public void addInterest(String s) {
+    this.interestSet.add(s);
+  }
+
+  public void removeInterest(String s) {
+    this.interestSet.remove(s);
   }
 
   // Method to create a post and add it to the post list
