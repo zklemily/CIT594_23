@@ -150,4 +150,60 @@ public class main {
 
         return nodes;
     }
+
+    public static void main(String[] args) {
+        // Initialize your social network and other necessary objects
+
+        // Start the main loop for the terminal-based interaction
+        Scanner scanner = new Scanner(System.in);
+        boolean exit = false;
+
+        while (!exit) {
+            // Display the menu options
+            displayMenu();
+
+            // Get user input
+            String choice = scanner.nextLine();
+
+            // Process the user's choice
+            switch (choice.toLowerCase()) {
+                case "1":
+                    // Perform action 1
+                    break;
+                case "2":
+                    // Perform action 2
+                    break;
+                case "3":
+                    // Perform action 3
+                    break;
+                case "4":
+                    // Perform action 4
+                    break;
+                case "5":
+                    // Perform action 5
+                    break;
+                case "q":
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+        }
+
+        // Clean up and exit the application
+        scanner.close();
+        System.out.println("Exiting the social network application.");
+    }
+
+    private static void displayMenu() {
+        System.out.println("=== Social Network Menu ===");
+        System.out.println("1. Option 1");
+        System.out.println("2. Option 2");
+        System.out.println("3. Option 3");
+        System.out.println("4. Option 4");
+        System.out.println("5. Option 5");
+        System.out.println("Q. Quit");
+        System.out.print("Enter your choice: ");
+    }
 }
