@@ -19,6 +19,10 @@ public class Network implements Graph {
         numEdge = 0;
     }
 
+    public void main() {
+        // main method used for user interaction
+    }
+
     // Return the number of vertices
     public int nodeCount()
     {
