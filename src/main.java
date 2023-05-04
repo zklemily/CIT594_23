@@ -1,5 +1,3 @@
-package src;
-
 import java.io.*;
 import java.util.*;
 
@@ -40,7 +38,7 @@ public class main {
                 if (weight < tau) {
                     continue;
                 }
-                graph.addEdge(v1, v2, (int) (weight * 100));
+//                graph.addEdge(v1, v2, (int) (weight * 100));
                 set.add(v1);
                 set.add(v2);
             }
@@ -62,7 +60,7 @@ public class main {
                 String[] data = line.split(",");
                 int userIndex = Integer.parseInt(data[0].trim());
                 String interest = data[1];
-                User user = (User) graph.getValue(userIndex);
+//                User user = (User) graph.getValue(userIndex);
             }
 
         } catch (IOException e) {
@@ -80,9 +78,9 @@ public class main {
      * @param id the id of the vertex
      * @return the array of neighbor(s)
      */
-    public int[] getNeighbors(int id) {
-        return graph.neighbors(id);
-    }
+//    public int[] getNeighbors(int id) {
+//        return graph.neighbors(id);
+//    }
 
     /**
      * return the shortest path between two vertices
@@ -108,22 +106,22 @@ public class main {
         Arrays.fill(parent, -1);
 
         // Run Dijkstra's algorithm
-        while (!queue.isEmpty()) {
-            int curr = queue.poll();
-            if (visited[curr]) {
-                continue;
-            }
-            visited[curr] = true;
-            for (int neighbor : graph.neighbors(curr)) {
-                double weight = graph.weight(curr, neighbor);
-                weight /= 100;
-                if (dist[curr] - Math.log(weight) < dist[neighbor]) {
-                    dist[neighbor] = dist[curr] - Math.log(weight);
-                    parent[neighbor] = curr;
-                    queue.offer(neighbor);
-                }
-            }
-        }
+//        while (!queue.isEmpty()) {
+//            int curr = queue.poll();
+//            if (visited[curr]) {
+//                continue;
+//            }
+//            visited[curr] = true;
+//            for (int neighbor : graph.neighbors(curr)) {
+//                double weight = graph.weight(curr, neighbor);
+//                weight /= 100;
+//                if (dist[curr] - Math.log(weight) < dist[neighbor]) {
+//                    dist[neighbor] = dist[curr] - Math.log(weight);
+//                    parent[neighbor] = curr;
+//                    queue.offer(neighbor);
+//                }
+//            }
+//        }
 
         // Construct the path from the parent array
         List<Integer> path = new ArrayList<>();
@@ -143,31 +141,31 @@ public class main {
     /**
      * Compute the average degree of the graph
      */
-    public double avgDegree() {
-        return (double) graph.edgeCount() / numVertices;
-    }
+//    public double avgDegree() {
+//        return (double) graph.edgeCount() / numVertices;
+//    }
 
-    public int degree(int n) {
-        if (graph.neighbors(n) == null) {
-            return -1;
-        }
-        return graph.neighbors(n).length;
-    }
+//    public int degree(int n) {
+//        if (graph.neighbors(n) == null) {
+//            return -1;
+//        }
+//        return graph.neighbors(n).length;
+//    }
 
     /**
-     * @param d the degree
+//     * @param d the degree
      * @return all the node with degree d
      */
-    public Collection<Integer> degreeNodes(int d) {
-        Set<Integer> nodes = new HashSet<>();
-        for (int i = 1; i <= numVertices; i++) {
-            if (graph.neighbors(i).length == d) {
-                nodes.add(i);
-            }
-        }
-
-        return nodes;
-    }
+//    public Collection<Integer> degreeNodes(int d) {
+//        Set<Integer> nodes = new HashSet<>();
+//        for (int i = 1; i <= numVertices; i++) {
+//            if (graph.neighbors(i).length == d) {
+//                nodes.add(i);
+//            }
+//        }
+//
+//        return nodes;
+//    }
 
     public static void main(String[] args) {
         // Initialize your social network and other necessary objects

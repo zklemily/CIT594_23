@@ -1,150 +1,41 @@
-package src;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  *
  */
-public class Network implements Graph {
+public class Network {
 
-    private Edge[]   nodeArray;
-    private Object[] nodeValues;
-    private int      numEdge;
+    private List<User> nodeArray;
 
     // Initialize the graph with n vertices
     public void init(int n)
     {
-        nodeArray = new Edge[n];
-        // List headers;
-        for (int i = 0; i < n; i++)
-            nodeArray[i] = new Edge(-1, -1, null, null);
-        nodeValues = new Object[n];
-        numEdge = 0;
+        nodeArray = new ArrayList<>();
     }
 
-    public void main() {
-        // main method used for user interaction
-        return;
-    }
-
-    public Edge[] getNodeArray() {
+    public List<User> getNodeArray() {
         return nodeArray;
     }
 
     // Return the number of vertices
-    public int nodeCount()
+    public int userCount()
     {
-        return nodeArray.length;
+        return nodeArray.size();
     }
 
-    // Return the current number of edges
-    public int edgeCount()
+
+    // Get the user at index v
+    public User getUser(int v)
     {
-        return numEdge;
+        return nodeArray.get(v);
     }
 
-    // Get the value of node with index v
-    public Object getValue(int v)
+    // Set the user at index v
+    public void setUser(int v, User user)
     {
-        return nodeValues[v];
+        nodeArray.set(v, user);
     }
 
-
-    // Set the value of node with index v
-    public void setValue(int v, Object val)
-    {
-        nodeValues[v] = val;
-    }
-
-
-    // Return the link in v's neighbor list that precedes the
-    // one with w (or where it would be)
-    private Edge find(int v, int w)
-    {
-        Edge curr = nodeArray[v];
-        while ((curr.next != null) && (curr.next.vertex < w))
-            curr = curr.next;
-        return curr;
-    }
-
-
-    // Adds a new edge from node v to node w with weight wgt
-    public void addEdge(int v, int w, int wgt)
-    {
-        if (wgt == 0)
-            return; // Can't store weight of 0
-        Edge curr = find(v, w);
-        if ((curr.next != null) && (curr.next.vertex == w))
-            curr.next.weight = wgt;
-        else
-        {
-            curr.next = new Edge(w, wgt, curr, curr.next);
-            if (curr.next.next != null)
-                curr.next.next.prev = curr.next;
-        }
-        numEdge++;
-    }
-
-
-    // Get the weight value for an edge
-    public int weight(int v, int w)
-    {
-        Edge curr = find(v, w);
-        if ((curr.next == null) || (curr.next.vertex != w))
-            return 0;
-        else
-            return curr.next.weight;
-    }
-
-
-    // Removes the edge from the graph.
-    public void removeEdge(int v, int w)
-    {
-        Edge curr = find(v, w);
-        if ((curr.next == null) || curr.next.vertex != w)
-            return;
-        else
-        {
-            curr.next = curr.next.next;
-            if (curr.next != null)
-                curr.next.prev = curr;
-        }
-        numEdge--;
-    }
-
-
-    // Returns true iff the graph has the edge
-    public boolean hasEdge(int v, int w)
-    {
-        return weight(v, w) != 0;
-    }
-
-
-    // Returns an array containing the indices of the neighbors of v
-    public int[] neighbors(int v)
-    {
-        int cnt = 0;
-        Edge curr;
-        for (curr = nodeArray[v].next; curr != null; curr = curr.next)
-            cnt++;
-        int[] temp = new int[cnt];
-        cnt = 0;
-        for (curr = nodeArray[v].next; curr != null; curr = curr.next)
-            temp[cnt++] = curr.vertex;
-        return temp;
-    }
-
-    private class Edge { // Doubly linked list node
-        int  vertex, weight;
-        Edge prev;
-        Edge next;
-
-
-        Edge(int v, int w, Edge p, Edge n)
-        {
-            vertex = v;
-            weight = w;
-            prev = p;
-            next = n;
-        }
-    }
 }

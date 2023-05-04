@@ -1,5 +1,3 @@
-package src;
-
 // Define the Post class with the given properties
 class Post {
   private String postId;
