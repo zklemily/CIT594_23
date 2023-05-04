@@ -24,6 +24,10 @@ public class Network implements Graph {
         return;
     }
 
+    public Edge[] getNodeArray() {
+        return nodeArray;
+    }
+
     // Return the number of vertices
     public int nodeCount()
     {
