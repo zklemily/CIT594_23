@@ -21,6 +21,7 @@ public class Network implements Graph {
 
     public void main() {
         // main method used for user interaction
+        return;
     }
 
     // Return the number of vertices
