@@ -21,9 +21,7 @@ class User {
   }
 
   // Getters and setters for all properties
-  public String getUserId() {
-    return userId;
-  }
+  public String getUserId() { return userId;}
 
   public void setUserId(String userId) {
     this.userId = userId;

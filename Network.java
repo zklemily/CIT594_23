@@ -1,5 +1,5 @@
 /**
- * @author OpenDSA
+ *
  *
  */
 public class Network implements Graph {
@@ -19,20 +19,17 @@ public class Network implements Graph {
         numEdge = 0;
     }
 
-
     // Return the number of vertices
     public int nodeCount()
     {
         return nodeArray.length;
     }
 
-
     // Return the current number of edges
     public int edgeCount()
     {
         return numEdge;
     }
-
 
     // Get the value of node with index v
     public Object getValue(int v)
