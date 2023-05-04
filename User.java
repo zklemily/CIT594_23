@@ -88,8 +88,8 @@ class User {
   }
 
   // Method to remove a friend from the friend list
-  public void removeFriend(User user) {
-    friendList.remove(user);
+  public void removeFollower(User user) {
+    this.followerSet.remove(user);
   }
 
   // Method to create a post and add it to the post list
