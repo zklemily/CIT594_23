@@ -15,6 +15,7 @@ public class main {
     private int numVertices;    //all vertices in the doc
     private int actualVertices; //actual vertices without junk edges
     private double tau;
+
     Network graph = new Network();
 
     public int loadGraphFromDataSet(String filePath, double tau) {
@@ -55,6 +56,19 @@ public class main {
     public void connect(int v, int w, int wt) {
 
     }
+
+    public Set<User> findCommonFollowers(User a, User b) {
+        Set<User> intersection = new HashSet<>(a.getFollowers()); // use the copy constructor
+        intersection.retainAll(b.getFollowers());
+        return intersection;
+    }
+
+    public Set<User> findCommonFollowings(User a, User b) {
+        Set<User> intersection = new HashSet<>(a.getFollowings()); // use the copy constructor
+        intersection.retainAll(b.getFollowings());
+        return intersection;
+    }
+
 
     /**
      * Return the ids of the neighbors of a specific vertex
@@ -129,7 +143,12 @@ public class main {
         return (double) graph.edgeCount() / numVertices;
     }
 
-    public int degree(int n) {
+    /**
+
+
+     */
+
+    public int degree (int n) {
         if (graph.neighbors(n) == null) {
             return -1;
         }

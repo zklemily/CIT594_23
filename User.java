@@ -61,12 +61,12 @@ class User {
     this.dateOfBirth = dateOfBirth;
   }
 
-  public List<User> getFriendList() {
-    return friendList;
+  public Set<User> getFollowers() {
+      return followerSet;
   }
 
-  public void setFriendList(List<User> friendList) {
-    this.friendList = friendList;
+  public Set<User> getFollowings() {
+      return followingSet;
   }
 
   public List<Post> getPostList() {
