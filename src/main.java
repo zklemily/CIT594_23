@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class main {
+public class Main {
     /**
      * Create a graph representation of the dataset. The first line of the file
      * contains the number of nodes. Keep in mind that the vertex with id 0 is
@@ -42,6 +42,7 @@ public class main {
                 set.add(v1);
                 set.add(v2);
             }
+            br.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -51,21 +52,31 @@ public class main {
         return actualVertices;
     }
 
-    public void loadUserInterests(String path) {
-        try{
+    public void loadData(String path, BiUser<User, String> function) {
+        try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             String line;
             br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
                 int userIndex = Integer.parseInt(data[0].trim());
-                String interest = data[1];
-                // TODO get User by index, add interest into User's interests
+                String value = data[1];
+                User currUser = graph.getUser(userIndex);
+                function.accept(currUser, value);
             }
-
+            br.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+//
+//        // Load user interests
+//        loadData("userInterests.txt", (user, interest) -> user.addInterest(interest));
+//
+//        // Load usernames
+//        loadData("username1000.txt", (user, username) -> user.setUsername(username));
+//
+//        // Load passwords
+//        loadData("userPassword1000.txt", (user, password) -> user.setPassword(password));
     }
 
     public void connect(int v, int w, int wt) {
@@ -179,8 +190,10 @@ public class main {
     }
 
     /**
-    *
-    */
+     * @return list of <user, shared number of interests> pairs
+     * ranked by shared number of interests
+     *
+     */
     public List<AbstractMap.SimpleEntry<User, Integer>> findCommonInterestUsers (User user) {
         List<AbstractMap.SimpleEntry<User, Integer>> ret = new ArrayList<>();
 
@@ -197,6 +210,10 @@ public class main {
         return ret;
     }
 
+    /**
+     * @return list of users ranked by number of followers
+     *
+     */
     public List<User> kMostInfluentialUsers (int k) {
         PriorityQueue<User> pq = new PriorityQueue<>(Comparator.comparingInt(user -> -user.getFollowers().size()));
 
