@@ -233,70 +233,98 @@ public class Main {
     }
 
 
-    public User login(String username, String password) {
+    public User login() {
+        Scanner scanner = new Scanner(System.in);
         Map<String, AbstractMap.SimpleEntry<User, String>> credentials = graph.getCredentials();
-        if (!credentials.containsKey(username)) {
-            System.out.println("Invalid username!");
-            return graph.getUser(0);
-        } else {
-            AbstractMap.SimpleEntry<User, String> value = credentials.get(username);
-            if (!value.getValue().equals(password)) {
-                System.out.println("Invalid password!");
-                // to do: forgot your password?
+        System.out.println("Please enter your username: ");
+        String username = scanner.nextLine().trim();
+        while (!credentials.containsKey(username)) {
+            System.out.println("Invalid username! Please try again, or type 'q' to exit.");
+            String userInput = scanner.nextLine().trim();
+            if (userInput.equals("q")) {
                 return graph.getUser(0);
-            } else {
-                return value.getKey();
             }
         }
+
+        String password = scanner.nextLine().trim();
+        AbstractMap.SimpleEntry<User, String> value = credentials.get(username);
+        while (!value.getValue().equals(password)) {
+            System.out.println("Invalid password! Please try again, or type 'q' to exit.");
+            password = scanner.nextLine().trim();
+            if (password.equals("q")) {
+                return graph.getUser(0);
+            }
+        }
+        return value.getKey();
     }
 
     public User register() {
         Map<String, AbstractMap.SimpleEntry<User, String>> credentials = graph.getCredentials();
         Scanner scanner = new Scanner(System.in);
-//        while (true) {
-//            System.out.println("Please enter your username: ");
-//            String userInput = scanner.nextLine().trim();
-//            while (credentials.containsKey(userInput)) {
-//                System.out.println("The username already exists. Please enter another one. Or type 'q' to exit");
-//                userInput = scanner.nextLine().trim();
-//                if (userInput.equals("q")) {
-//                    break;
-//                }
-//            }
-//        }
-        return null;
+
+        System.out.println("Please enter your username: ");
+        String userInput = scanner.nextLine().trim();
+        while (credentials.containsKey(userInput)) {
+            System.out.println("The username already exists. Please enter another one. Or type 'q' to exit");
+            userInput = scanner.nextLine().trim();
+            if (userInput.equals("q")) {
+                return graph.getUser(0);
+            }
+        }
+
+        System.out.println("Please enter your password: ");
+        String userPassword = scanner.nextLine().trim();
+        int userId = graph.getNodeArray().size();
+        User newUser = new User(userId);
+        graph.addUser(newUser);
+
+        newUser.setUsername(userInput);
+        newUser.setPassword(userPassword);
+
+        credentials.put(userInput, new AbstractMap.SimpleEntry<>(newUser, userPassword));
+
+        return newUser;
     }
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         // Initialize your social network and other necessary objects
 
         // Start the main loop for the terminal-based interaction
         Scanner scanner = new Scanner(System.in);
-        boolean exit = false;
 
-        while (!exit) {
+        boolean flag = true;
+        while (flag) {
             // Display the menu options
             displayMainMenu();
 
             // Get user input
             String choice = scanner.nextLine();
+            String userInput;
 
-            // Process the user's choice
-            switch (choice.toLowerCase()) {
-                case "1":
-                    // Perform action 1
+            switch (choice) {
+                case "1": {
+                    if (this.login().getUserId() == 0) {
+                        continue;
+                    }
+                    User currUser = this.login();
                     break;
-                case "2":
-                    // Perform action 2
+                }
+                case "2": {
+                    if (this.register().getUserId() == 0) {
+                        continue;
+                    }
+                    User currUser = this.register();
                     break;
+                }
                 case "3":
-                    // Perform action 3
-                    exit = true;
+                    flag = false;
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
+                    flag = false;
                     break;
             }
+
         }
 
         // Clean up and exit the application

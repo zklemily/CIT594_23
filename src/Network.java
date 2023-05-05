@@ -47,6 +47,10 @@ public class Network {
 
     }
 
+    public void addUser(User newUser) {
+        nodeArray.add(newUser);
+    }
+
     public void setUsername(int v, String username) {
         if (!credentials.containsKey(username)) {
             credentials.put(username, new AbstractMap.SimpleEntry<>(getUser(v), ""));
