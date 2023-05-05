@@ -1,23 +1,19 @@
 import java.util.*;
 
 class User {
-  private String userId;
-  private String username;
-  private String password;
-  private String email;
-  private String dateOfBirth;
+  private int userId;
+  private String username = "";
+  private String password = "";
+  private String email = "";
+  private String dateOfBirth = "";
   private HashMap<User, Double> followers;
   private HashMap<User, Double> followings;
   private Set<String> interestSet;
   private List<Post> postList;
 
   // Constructor to initialize the User object with the given properties
-  public User(String userId, String username, String password, String email, String dateOfBirth, String profilePicture) {
+  public User(int userId) {
     this.userId = userId;
-    this.username = username;
-    this.password = password;
-    this.email = email;
-    this.dateOfBirth = dateOfBirth;
     this.followers = new HashMap<>();
     this.followings = new HashMap<>();
     this.interestSet = new HashSet<>();
@@ -25,9 +21,9 @@ class User {
   }
 
   // Getters and setters for all properties
-  public String getUserId() { return userId;}
+  public int getUserId() { return userId;}
 
-  public void setUserId(String userId) {
+  public void setUserId(int userId) {
     this.userId = userId;
   }
 

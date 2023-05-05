@@ -13,6 +13,9 @@ public class Network {
     public void init(int n)
     {
         nodeArray = new ArrayList<>();
+        for (int i = 0; i <= n; i++) {
+            nodeArray.add(new User(i));
+        }
     }
 
     public List<User> getNodeArray() {
