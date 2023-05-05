@@ -216,6 +216,40 @@ public class main {
     }
 
 
+    public User login(String username, String password) {
+        Map<String, AbstractMap.SimpleEntry<User, String>> credentials = graph.getCredentials();
+        if (!credentials.containsKey(username)) {
+            System.out.println("Invalid username!");
+            return graph.getUser(0);
+        } else {
+            AbstractMap.SimpleEntry<User, String> value = credentials.get(username);
+            if (!value.getValue().equals(password)) {
+                System.out.println("Invalid password!");
+                // to do: forgot your password?
+                return graph.getUser(0);
+            } else {
+                return value.getKey();
+            }
+        }
+    }
+
+    public User register() {
+        Map<String, AbstractMap.SimpleEntry<User, String>> credentials = graph.getCredentials();
+        Scanner scanner = new Scanner(System.in);
+//        while (true) {
+//            System.out.println("Please enter your username: ");
+//            String userInput = scanner.nextLine().trim();
+//            while (credentials.containsKey(userInput)) {
+//                System.out.println("The username already exists. Please enter another one. Or type 'q' to exit");
+//                userInput = scanner.nextLine().trim();
+//                if (userInput.equals("q")) {
+//                    break;
+//                }
+//            }
+//        }
+        return null;
+    }
+
     public static void main(String[] args) {
         // Initialize your social network and other necessary objects
 
@@ -225,7 +259,7 @@ public class main {
 
         while (!exit) {
             // Display the menu options
-            displayMenu();
+            displayMainMenu();
 
             // Get user input
             String choice = scanner.nextLine();
@@ -240,14 +274,6 @@ public class main {
                     break;
                 case "3":
                     // Perform action 3
-                    break;
-                case "4":
-                    // Perform action 4
-                    break;
-                case "5":
-                    // Perform action 5
-                    break;
-                case "q":
                     exit = true;
                     break;
                 default:
@@ -261,14 +287,11 @@ public class main {
         System.out.println("Exiting the social network application.");
     }
 
-    private static void displayMenu() {
+    private static void displayMainMenu() {
         System.out.println("=== Social Network Menu ===");
-        System.out.println("1. Option 1");
-        System.out.println("2. Option 2");
-        System.out.println("3. Option 3");
-        System.out.println("4. Option 4");
-        System.out.println("5. Option 5");
-        System.out.println("Q. Quit");
-        System.out.print("Enter your choice: ");
+        System.out.println("1. Login");
+        System.out.println("2. Register");
+        System.out.println("3. Quit");
+        System.out.print("Please enter your option: eg. '1'");
     }
 }
