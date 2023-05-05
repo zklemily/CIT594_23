@@ -23,12 +23,12 @@ public class main {
         try {
             BufferedReader br = new BufferedReader(new FileReader(filePath));
             String line;
-            int numVertices = Integer.parseInt(br.readLine().split(" ")[0]);
+            int numVertices = Integer.parseInt(br.readLine().split(",")[0]);
             this.numVertices = numVertices;
-            graph.init(numVertices + 1);
+            graph.init(numVertices);
             //try to read the file line by line
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(" ");
+                String[] parts = line.split(",");
                 if (parts.length < 3) {
                     continue;
                 }
@@ -38,7 +38,7 @@ public class main {
                 if (weight < tau) {
                     continue;
                 }
-//                graph.addEdge(v1, v2, (int) (weight * 100));
+                graph.getUser(v1).follow(graph.getUser(v2), weight);
                 set.add(v1);
                 set.add(v2);
             }
@@ -60,7 +60,7 @@ public class main {
                 String[] data = line.split(",");
                 int userIndex = Integer.parseInt(data[0].trim());
                 String interest = data[1];
-//                User user = (User) graph.getValue(userIndex);
+                // TODO get User by index, add interest into User's interests
             }
 
         } catch (IOException e) {
@@ -72,15 +72,6 @@ public class main {
 
     }
 
-    /**
-     * Return the ids of the neighbors of a specific vertex
-     *
-     * @param id the id of the vertex
-     * @return the array of neighbor(s)
-     */
-//    public int[] getNeighbors(int id) {
-//        return graph.neighbors(id);
-//    }
 
     /**
      * return the shortest path between two vertices
@@ -106,22 +97,23 @@ public class main {
         Arrays.fill(parent, -1);
 
         // Run Dijkstra's algorithm
-//        while (!queue.isEmpty()) {
-//            int curr = queue.poll();
-//            if (visited[curr]) {
-//                continue;
-//            }
-//            visited[curr] = true;
-//            for (int neighbor : graph.neighbors(curr)) {
-//                double weight = graph.weight(curr, neighbor);
-//                weight /= 100;
-//                if (dist[curr] - Math.log(weight) < dist[neighbor]) {
-//                    dist[neighbor] = dist[curr] - Math.log(weight);
-//                    parent[neighbor] = curr;
-//                    queue.offer(neighbor);
-//                }
-//            }
-//        }
+        while (!queue.isEmpty()) {
+            int curr = queue.poll();
+            if (visited[curr]) {
+                continue;
+            }
+            visited[curr] = true;
+            User currUser = graph.getUser(curr);
+            for (User neighbor : currUser.getFollowings().keySet()) {
+                int n = neighbor.getUserId();
+                double weight = currUser.getFollowings().get(neighbor);
+                if (dist[curr] + weight < dist[n]) {
+                    dist[n] = dist[curr] + weight;
+                    parent[n] = curr;
+                    queue.offer(n);
+                }
+            }
+        }
 
         // Construct the path from the parent array
         List<Integer> path = new ArrayList<>();
@@ -141,31 +133,88 @@ public class main {
     /**
      * Compute the average degree of the graph
      */
-//    public double avgDegree() {
-//        return (double) graph.edgeCount() / numVertices;
-//    }
+    public double avgInDegree() {
+        int edgeCount = 0;
+        for (User i : graph.getNodeArray()) {
+            edgeCount += i.getFollowers().size();
+        }
+        return (double) edgeCount / numVertices;
+    }
 
-//    public int degree(int n) {
-//        if (graph.neighbors(n) == null) {
-//            return -1;
-//        }
-//        return graph.neighbors(n).length;
-//    }
+    public double avgOutDegree() {
+        int edgeCount = 0;
+        for (User i : graph.getNodeArray()) {
+            edgeCount += i.getFollowings().size();
+        }
+        return (double) edgeCount / numVertices;
+    }
+
+    public int inDegree(int n) {
+        if (graph.getUser(n).getFollowers().size() == 0) {
+            return -1;
+        }
+        return graph.getUser(n).getFollowers().size();
+    }
+
+    public int outDegree(int n) {
+        if (graph.getUser(n).getFollowings().size() == 0) {
+            return -1;
+        }
+        return graph.getUser(n).getFollowings().size();
+    }
 
     /**
-//     * @param d the degree
+     * @param d the degree
      * @return all the node with degree d
      */
-//    public Collection<Integer> degreeNodes(int d) {
-//        Set<Integer> nodes = new HashSet<>();
-//        for (int i = 1; i <= numVertices; i++) {
-//            if (graph.neighbors(i).length == d) {
-//                nodes.add(i);
-//            }
-//        }
-//
-//        return nodes;
-//    }
+    public Collection<User> inDegreeNodes(int d) {
+        Set<User> nodes = new HashSet<>();
+        for (User i : graph.getNodeArray()) {
+            if (i.getFollowers().size() == d) {
+                nodes.add(i);
+            }
+        }
+
+        return nodes;
+    }
+
+    /**
+    *
+    */
+    public List<AbstractMap.SimpleEntry<User, Integer>> findCommonInterestUsers (User user) {
+        List<AbstractMap.SimpleEntry<User, Integer>> ret = new ArrayList<>();
+
+        for (User x : graph.getNodeArray()) {
+            Set<String> intersection = new HashSet<>(user.getInterestSet());
+            intersection.retainAll(x.getInterestSet());
+            if (intersection.size() != 0) {
+                ret.add(new AbstractMap.SimpleEntry<>(x, intersection.size()));
+            }
+        }
+
+        ret.sort(Map.Entry.comparingByValue());
+
+        return ret;
+    }
+
+    public List<User> kMostInfluentialUsers (int k) {
+        PriorityQueue<User> pq = new PriorityQueue<>(Comparator.comparingInt(user -> -user.getFollowers().size()));
+
+        for (User x : graph.getNodeArray()) {
+            pq.offer(x);
+            if (pq.size() > k) {
+                pq.poll();
+            }
+        }
+
+        List<User> ret = new ArrayList<>();
+        while (!pq.isEmpty()) {
+            ret.add(pq.poll());
+        }
+
+        return ret;
+    }
+
 
     public static void main(String[] args) {
         // Initialize your social network and other necessary objects
@@ -210,7 +259,6 @@ public class main {
         // Clean up and exit the application
         scanner.close();
         System.out.println("Exiting the social network application.");
-
     }
 
     private static void displayMenu() {
