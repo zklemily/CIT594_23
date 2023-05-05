@@ -80,7 +80,7 @@ class User {
   // Method to remove a friend from the friend list
   public void removeFollower(User user) {
     this.followers.entrySet()
-            .removeIf(entry -> entry.getKey().equals("Grape"));
+            .removeIf(entry -> entry.getKey().equals(user));
   }
 
   public HashMap<User, Double> getFollowers() {
