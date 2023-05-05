@@ -6,8 +6,8 @@ class User {
   private String password;
   private String email;
   private String dateOfBirth;
-  private Set<AbstractMap.SimpleEntry<User, Double>> followerSet;
-  private Set<AbstractMap.SimpleEntry<User, Double>> followingSet;
+  private HashMap<User, Double> followers;
+  private HashMap<User, Double> followings;
   private Set<String> interestSet;
   private List<Post> postList;
 
@@ -18,8 +18,8 @@ class User {
     this.password = password;
     this.email = email;
     this.dateOfBirth = dateOfBirth;
-    this.followerSet = new HashSet<>();
-    this.followingSet = new HashSet<>();
+    this.followers = new HashMap<>();
+    this.followings = new HashMap<>();
     this.interestSet = new HashSet<>();
     this.postList = new ArrayList<>();
   }
@@ -73,17 +73,26 @@ class User {
 
   // Method to add a friend to the friend list
   public void follow(User user, double wt) {
-    this.followingSet.add(new AbstractMap.SimpleEntry<>(user, wt));
+    this.followings.put(user, wt);
     user.addFollower(this, wt);
   }
 
   public void addFollower(User user, double wt) {
-    this.followerSet.add(new AbstractMap.SimpleEntry<>(user, wt));
+    this.followers.put(user, wt);
   }
 
   // Method to remove a friend from the friend list
   public void removeFollower(User user) {
-    this.followerSet.remove(user);
+    this.followers.entrySet()
+            .removeIf(entry -> entry.getKey().equals("Grape"));
+  }
+
+  public HashMap<User, Double> getFollowers() {
+    return this.followers;
+  }
+
+  public HashMap<User, Double> getFollowings() {
+    return this.followings;
   }
 
   public void addInterest(String s) {
@@ -92,6 +101,10 @@ class User {
 
   public void removeInterest(String s) {
     this.interestSet.remove(s);
+  }
+
+  public Set<String> getInterestSet() {
+    return this.interestSet;
   }
 
   // Method to create a post and add it to the post list
